@@ -32,9 +32,9 @@ public class BubbleSortDemoBenchmark implements IBenchmark{
 		}
 		//System.out.println("");
 	
-	};
-	public void clean() {};
-	public void cancel() {};
-	public void warmUp() {};
+	}
+	public void clean() {}
+	public void cancel() {}
+	public void warmUp() {}
 	public String getResult() { return "";}
 }

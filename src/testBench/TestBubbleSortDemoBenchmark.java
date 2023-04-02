@@ -8,7 +8,7 @@ import timing.ITimer;
 import timing.Timer;
 
 public class TestBubbleSortDemoBenchmark{
-	public static void main(String args[]) {
+	public static void main(String[] args) {
 		ITimer timer = new Timer();
 		ILog log = new ConsoleLogger();
 		IBenchmark bench = new SleepDemoBenchmark();
