@@ -13,14 +13,18 @@ public class TestCPURecursionLoopUnrolling {
 
         IBenchmark bench = new CPURecursionLoopUnrolling();
         bench.initialize(10000);
+        long time;
         timer.start();
-        bench.run(true, 3);
-        log.write("The sum is: " + bench.getResult() + " \nCalculated UNROLLED in " + timer.Convert(1, timer.pause()) +"s\n");
+        bench.run(true, 10);
+        time = timer.pause();
+        log.write("The sum is: " + bench.getResult() + " \nCalculated UNROLLED in " + timer.Convert(1, time) +"s\n");
+        log.write("The score is: " + ((CPURecursionLoopUnrolling)bench).getScore(time) +"\n");
 
         timer.resume();
         bench.run(false);
-        log.write("The sum is: " + bench.getResult() + " \nCalculated ROLLED in " + timer.Convert(1, timer.stop()) +"s\n");
-
+        time = timer.stop();
+        log.write("The sum is: " + bench.getResult() + " \nCalculated ROLLED in " + timer.Convert(1, time) +"s\n");
+        log.write("The score is: " + ((CPURecursionLoopUnrolling)bench).getScore(time)+ "\n");
         bench.clean();
         log.close();
     }

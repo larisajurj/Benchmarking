@@ -1,10 +1,11 @@
 package bench.cpu;
+import java.lang.Math.*;
 
 import bench.IBenchmark;
 
 public class CPURecursionLoopUnrolling implements IBenchmark {
 	private long sum = 0;
-	private int size;
+	private long size;
 	long result = 0;
 	@Override
 	public void run() {
@@ -113,6 +114,9 @@ public class CPURecursionLoopUnrolling implements IBenchmark {
 	public String getResult() {
 		// TODO Auto-generated method stub
 		return result + "";
+	}
+	public double getScore(long time){
+		return (Math.log(size)+result)/time*100;
 	}
 
 }
