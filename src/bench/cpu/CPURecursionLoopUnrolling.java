@@ -4,7 +4,8 @@ import bench.IBenchmark;
 
 public class CPURecursionLoopUnrolling implements IBenchmark {
 	private long sum = 0;
-	private int workload;
+	private int size;
+	long result = 0;
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
@@ -16,10 +17,13 @@ public class CPURecursionLoopUnrolling implements IBenchmark {
 		boolean isRolling = (boolean)params[0];
 		if(isRolling) {
 			int unrollLevel = (int)params[1]; //how many iterations will we roll per loop
+			sum = 0;
+			result = recursiveUnrolled( 0, unrollLevel ,size , 0);
 			
 		}
 		else {
-			
+			sum = 0;
+			result = recursive(0,  size, 0);
 		}
 		
 
@@ -33,7 +37,7 @@ public class CPURecursionLoopUnrolling implements IBenchmark {
 	            return false;
 	        }
 	    }
-	    System.out.println("Is prime: " + n);
+	    //System.out.println("Is prime: " + n);
 	    return true;
 	}
 	
@@ -60,20 +64,30 @@ public class CPURecursionLoopUnrolling implements IBenchmark {
 		 }
 
 	}
-	 private long recursiveUnrolled(long start, int unrollLevel, int size, int counter) {
-		 if(start > size)
-			 return 0;
-		 
-		 for(long i = start; i <= start + unrollLevel && i<size; i++) {
-			 if(isPrime(i))
-				 sum = sum + i;
-		 }
-		 return sum + recursiveUnrolled(start+unrollLevel, unrollLevel, size, counter+1);
-		 
-	 }
+	private long recursiveUnrolled(long start, int unrollLevel, long size, int counter) {
+		if(start >= size)
+			return 0;
+		long increase_start= 0;
+		for(long i = start; i < start+unrollLevel && i < size; i++, increase_start++) {
+			if(isPrime(i))
+			{
+				sum += i;
+				//System.out.println("sum is: " + sum + " (added " + i + ")");
+			}
+		}
+
+		start += increase_start;
+		try{
+			recursiveUnrolled(start, unrollLevel, size, counter+1);
+		}catch (StackOverflowError e) {
+			System.out.println("Reached nr " + start + "/" + size + " after " + counter + " calls.");
+			return 0;
+		}
+		return sum ;
+	}
 	@Override
 	public void initialize(Object... params) {
-		
+		this.size = (int)params[0];
 
 	}
 
@@ -98,7 +112,7 @@ public class CPURecursionLoopUnrolling implements IBenchmark {
 	@Override
 	public String getResult() {
 		// TODO Auto-generated method stub
-		return null;
+		return result + "";
 	}
 
 }
