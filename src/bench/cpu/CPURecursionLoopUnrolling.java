@@ -82,6 +82,7 @@ public class CPURecursionLoopUnrolling implements IBenchmark {
 			recursiveUnrolled(start, unrollLevel, size, counter+1);
 		}catch (StackOverflowError e) {
 			System.out.println("Reached nr " + start + "/" + size + " after " + counter + " calls.");
+			start = size;
 			return 0;
 		}
 		return sum ;
@@ -106,6 +107,8 @@ public class CPURecursionLoopUnrolling implements IBenchmark {
 
 	@Override
 	public void warmUp() {
+		recursive(0,  1000, 0);
+
 		// TODO Auto-generated method stub
 
 	}
@@ -116,7 +119,7 @@ public class CPURecursionLoopUnrolling implements IBenchmark {
 		return result + "";
 	}
 	public double getScore(long time){
-		return (Math.log(size)+result)/time*100;
+		return (size + Math.sqrt(result))/Math.pow(time, 1/2.0)*10;
 	}
 
 }
