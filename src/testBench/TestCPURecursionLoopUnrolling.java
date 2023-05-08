@@ -17,7 +17,7 @@ public class TestCPURecursionLoopUnrolling {
 
 
         CPURecursionLoopUnrolling bench = new CPURecursionLoopUnrolling();
-        bench.initialize(1000);
+        bench.initialize(10000);
         //bench.warmUp();
 
         long time;
